@@ -27,9 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/generate-qrcode', async (req, res) => {
   try {
     // Neste exemplo, o QR Code vai gerar uma URL de redirecionamento para a página de processamento
-    const qrCodeUrl = `https://qrcode-js.onrender.com/processing?content=${encodeURIComponent(
-      content,
-    )}`;
+    const qrCodeUrl = `https://qrcode-js.onrender.com/processing`;
 
     // Gera o QR Code com o link
     const qrCodeDataUrl = await QRCode.toDataURL(qrCodeUrl);
