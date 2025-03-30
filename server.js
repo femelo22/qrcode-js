@@ -1,21 +1,30 @@
 const express = require('express');
 const QRCode = require('qrcode');
 const path = require('path');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+
+// Importando as configurações do Swagger
+const swaggerDefinition = require('./swagger/swaggerDefinition');
+const generateQRCodeDocs = require('./swagger/generateQRCodeDocs');
 
 const app = express();
 const port = 3000;
 
+const options = {
+  swaggerDefinition,
+  apis: ['./swagger/generateQRCodeDocs.js'], // Referencia os arquivos com as anotações
+};
+
+const swaggerSpec = swaggerJSDoc(options);
+
+// Usando o Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Serve arquivos estáticos (como o HTML) a partir da pasta 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint para gerar o QR Code
 app.get('/generate-qrcode', async (req, res) => {
-  const { content } = req.query;
-
-  if (!content) {
-    return res.status(400).json({ error: 'Parâmetro "content" é obrigatório' });
-  }
-
   try {
     // Neste exemplo, o QR Code vai gerar uma URL de redirecionamento para a página de processamento
     const qrCodeUrl = `https://qrcode-js.onrender.com/processing?content=${encodeURIComponent(
