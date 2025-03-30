@@ -18,7 +18,7 @@ app.get('/generate-qrcode', async (req, res) => {
 
   try {
     // Neste exemplo, o QR Code vai gerar uma URL de redirecionamento para a página de processamento
-    const qrCodeUrl = `http://localhost:3000/processing?content=${encodeURIComponent(
+    const qrCodeUrl = `https://qrcode-js.onrender.com/processing?content=${encodeURIComponent(
       content,
     )}`;
 
